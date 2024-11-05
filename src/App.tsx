@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Main from "./components/Main"
-import Tsp from "./components/problems/tsp"
 import Sidebar from "./components/Sidebar"
 import { NotFound } from "./components/NotFound"
+import Tsp from "./components/problems/Tsp"
 
 function App() {
 	return (
