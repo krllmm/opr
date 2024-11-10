@@ -1,49 +1,32 @@
 import { Box } from "@mui/material"
 import { NavLink } from "react-router-dom";
 import { styled } from '@mui/system';
+import { MenuItems } from "../data/menuitems"
 
 const StyledLink = styled(NavLink)({
-  color: "black",
+	color: "#272727",
 	textDecoration: "none",
-	padding: 10,
+	paddingBlock: 10,
+    paddingInline: 20,
+	marginTop: 8,
 
 	"&.active": {
-		color: "white",
-		backgroundColor: "blue",
+		color: "#090909",
+		backgroundColor: "#4b866e",
 		fontWeight: "bold",
-		borderRadius: 4,
+		borderRadius: 6,
 	}
-
 })
 
 export const Menu = () => {
-	const MenuItems = [
-		{
-			name: "Главная",
-			link: "/home",
-		},
-		{
-			name: "Задача коммивояжера",
-			link: "/home/tsp",
-		},
-		{
-			name: "Справка",
-			link: "/home/info",
-		}
-	];
-
 	return (
 		<>
-			<Box sx={{ display: "flex", flexDirection: "column" }}>
+			<Box sx={{ display: "flex", flexDirection: "column", height: "100vh", paddingInline: "8px" }}>
 				{
 					MenuItems.map((item) => (
-						<StyledLink to={item.link}
+						<StyledLink
+							to={item.link}
 							end
-							// style={({ isActive }) =>
-							// 	isActive
-							// 		? { color: 'white', backgroundColor: 'blue', padding: '10px', borderRadius: '4px' }
-							// 		: {}
-							// }
 						>
 							{item.name}
 						</StyledLink>
