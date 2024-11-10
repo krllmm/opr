@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import { NavLink } from "react-router-dom";
 import { styled } from '@mui/system';
-import { MenuItems } from "../data/menuitems"
+import { MenuItems } from "../data/menuItems"
 
 const StyledLink = styled(NavLink)({
 	color: "#272727",
@@ -23,7 +23,8 @@ export const Menu = () => {
 		<>
 			<Box sx={{ display: "flex", flexDirection: "column", height: "100vh", paddingInline: "8px" }}>
 				{
-					MenuItems.map((item) => (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					MenuItems.map((item: any) => (
 						<StyledLink
 							to={item.link}
 							end
