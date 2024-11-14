@@ -13,7 +13,7 @@ interface RegisterProps {
     setUser: (id: string) => void
 } 
 
-export const Register = ({ setUser }: RegisterProps) => {
+export default function Register({ setUser }: RegisterProps) {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>("");

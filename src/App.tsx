@@ -5,7 +5,7 @@ import { Start } from "./components/Start"
 import { NotFound } from "./components/NotFound"
 import Tsp from "./components/problems/Tsp"
 import { Login } from "./components/user/Login"
-import { Register } from "./components/user/Register"
+import Register from "./components/user/Register"
 import { UserComponent } from "./components/user/UserComponent"
 import { Info } from "./components/Info"
 import { createContext, useState } from "react";
