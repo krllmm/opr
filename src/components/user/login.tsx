@@ -14,7 +14,7 @@ interface LoginProps {
     setUser: (id: string) => void
 } 
 
-export const Login = ({ setUser }: LoginProps) => {
+export default function Login ({ setUser }: LoginProps){
     const navigate = useNavigate();
 
     const [username, setUsername] = useState<string>("");
