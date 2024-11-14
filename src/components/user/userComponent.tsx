@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import { Outlet } from "react-router-dom"
 
-export default function userComponent() {
+export const UserComponent = () => {
     return (
         <>
             <Box sx={{ 

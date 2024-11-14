@@ -2,11 +2,11 @@ import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Main from "./components/Main"
 import { Start } from "./components/Start"
-import UserComponent from "./components/user/UserComponent"
 import { NotFound } from "./components/NotFound"
 import Tsp from "./components/problems/Tsp"
 import { Login } from "./components/user/Login"
 import { Register } from "./components/user/Register"
+import { UserComponent } from "./components/user/UserComponent"
 import { Info } from "./components/Info"
 import { createContext, useState } from "react";
 
