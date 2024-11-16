@@ -1,17 +1,11 @@
-import { Button, Divider, FormControl, TextField, Typography } from "@mui/material"
+import { Box, Button, Container, TextField, Typography } from "@mui/material"
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { styled } from '@mui/system';
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-const StyledLink = styled(NavLink)({
-    color: "#272727",
-    width: "max-content",
-})
 
 interface RegisterProps {
     setUser: (id: string) => void
-} 
+}
 
 export default function Register({ setUser }: RegisterProps) {
     const navigate = useNavigate();
@@ -19,11 +13,11 @@ export default function Register({ setUser }: RegisterProps) {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
+    const [, setMessage] = useState<string>("");
 
     const handleSubmit = () => {
 
-        if(password !== confirmPassword){ 
+        if (password !== confirmPassword) {
             setMessage("Пароли не совпадают")
             return;
         }
@@ -50,7 +44,7 @@ export default function Register({ setUser }: RegisterProps) {
                 console.log(data)
                 setUser(data['id'])
 
-                if(data["message"] === "Аккаунт создан") navigate("/home");
+                if (data["message"] === "Аккаунт создан") navigate("/home");
             })
             .catch(error => {
                 console.error('Ошибка при загрузке данных:', error);
@@ -60,27 +54,78 @@ export default function Register({ setUser }: RegisterProps) {
     }
 
     return (
-        <>
-            <Typography variant="h5">Крутой сайт</Typography>
-            <Divider sx={{ marginBlock: "8px" }} />
-            <FormControl sx={{ gap: "12px" }}>
-                <Typography>Логин</Typography>
-                <TextField size="small" value={username} placeholder="Логин" onChange={e => setUsername(e.target.value)}></TextField>
-                <Typography>Пароль</Typography>
-                <TextField type="password" size="small" value={password} placeholder="Пароль" onChange={e => setPassword(e.target.value)}></TextField>
-                <Typography>Подтверждение пароля</Typography>
-                <TextField type="password" size="small" value={confirmPassword} placeholder="Пароль" onChange={e => setConfirmPassword(e.target.value)}></TextField>
+        <Container
+            maxWidth="sm"
+            sx={{
+                mt: 2,
+                p: 4,
+                bgcolor: "#eeeeee",
+                border: "solid 2px",
+                borderColor: "#969696",
+                borderRadius: "1rem",
 
-                <Button onClick={handleSubmit} variant="contained">Зарегистрироваться</Button>
-                <Typography sx={{ marginInline: "auto" }}>
-                    Уже есть аккаунт? &nbsp;
-                    <StyledLink to="../">Войти</StyledLink>
+                '@media (max-width:600px)': {
+                    border: 'none',
+                    p: 2,
+                },
+            }}
+        >
+            <Typography variant="h4" gutterBottom color="#4b866e" align="center">
+                Регистрация
+            </Typography>
+            <Typography variant="body1" align="center">
+                Создайте аккаунт, чтобы начать использовать нашу платформу.
+            </Typography>
+            <Box component="form" noValidate sx={{ mt: 4 }}>
+                <TextField
+                    fullWidth
+                    label="Имя"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Пароль"
+                    variant="outlined"
+                    type="password"
+                    margin="normal"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                />
+                <TextField
+                    fullWidth
+                    label="Подтвердите пароль"
+                    variant="outlined"
+                    type="password"
+                    margin="normal"
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    required
+                />
+                <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2, backgroundColor: "#4b866e" }}
+                    onClick={handleSubmit}
+                >
+                    Зарегистрироваться
+                </Button>
+                <Typography variant="body2" align="center">
+                    Уже есть аккаунт?{' '}
+                    <Button
+                        component={Link}
+                        to="../"
+                        color="primary"
+                        sx={{ textTransform: 'none', p: 0, ml: 0.5 }}
+                    >
+                        Войти
+                    </Button>
                 </Typography>
-
-                {
-                    message 
-                }
-            </FormControl>
-        </>
+            </Box>
+        </Container>
     )
 }

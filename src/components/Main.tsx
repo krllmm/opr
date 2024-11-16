@@ -17,7 +17,7 @@ export default function Sidebar() {
 					</Grid>
 					<Grid 
                         size={{ xs: 12, md: 10 }} 
-                        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                        sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#d3d3d3" }}
                     >
 						<Outlet />
 					</Grid>
