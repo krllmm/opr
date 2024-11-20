@@ -50,7 +50,7 @@ export default function Home (){
         sx={{
           mt: 4,
           p: 4,
-          bgcolor: '№f9f9f9',
+          bgcolor: '#f9f9f9',
           borderRadius: 2,
           boxShadow: 2,
         }}

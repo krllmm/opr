@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material"
+import { Box, Divider, Typography } from "@mui/material"
 import { styled } from '@mui/system';
 import { NavLink } from "react-router-dom";
 
@@ -18,22 +18,78 @@ const StyledButton = styled(NavLink)({
 export const Start = () => {
 	return (
 		<>
+			<Typography variant="h3" sx={{ my: 4, textAlign: "center" }}>Начните решать новую задачу</Typography>
 			<Box
 				sx={{
+					marginInline: "auto",
 					display: "flex",
 					flexDirection: "column",
-					gap: "30px"				
 				}}
 			>
-
-				<Typography variant="h3">Начните решать новую задачу</Typography>
-
-				<Box sx={{ display: "flex", justifyContent: "center", gap: "8px" }}>
-					<StyledButton to="tsp">Задача коммивояжера</StyledButton>
-					<StyledButton to="2">Задача 2</StyledButton>
+				<Box
+					sx={{
+						p: 3,
+						m: 3,
+						backgroundColor: "lightgrey",
+						borderRadius: 2,
+						boxShadow: 2,
+					}}
+				>
+					<Typography variant="h4" sx={{ color: "#4b866e" }} >
+						Задача коммивояжера
+					</Typography>
+					<Divider sx={{ my: 2 }} />
+					<Typography
+						variant="h5"
+						sx={{
+							maxWidth: "600px",
+							mb: 4,
+						}}
+					>
+						Задача коммивояжера — это задача
+						оптимального маршрута, при котором нужно
+						посетить ряд городов ровно один раз и вернуться в начальный пункт. Цель —
+						минимизировать общее расстояние.
+					</Typography>
+					<StyledButton
+						to="tsp"
+					>
+						Решить задачу
+					</StyledButton>
 				</Box>
 
+				<Box
+					sx={{
+						p: 3,
+						m: 3,
+						backgroundColor: "lightgrey",
+						borderRadius: 2,
+						boxShadow: 2,
+					}}
+				>
+					<Typography variant="h4" gutterBottom sx={{ color: "#4b866e" }}>
+						Задача о рюкзаке
+					</Typography>
+					<Divider sx={{ my: 2 }} />
+					<Typography
+						variant="h5"
+						sx={{
+							maxWidth: "600px",
+							mb: 4,
+						}}
+					>
+						Задача о рюкзаке состоит в выборе набора предметов с
+						максимальной общей ценностью, которые можно поместить в рюкзак
+						ограниченной вместимости.
+					</Typography>
+					<StyledButton
+						to="kp"
+					>
+						Решить задачу
+					</StyledButton>
+				</Box>
 			</Box>
+
 		</>
 	)
 }

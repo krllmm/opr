@@ -2,27 +2,49 @@ import { Box } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 import { Outlet } from "react-router-dom"
 import { Menu } from "./Menu";
+import { useContext } from "react";
+import { UserContext } from "../App";
 
 export default function Sidebar() {
-	return (
-		<>
-			<Box sx={{ flexGrow: 1 }}>
-				<Grid container>
-					<Grid 
-                        size={{ xs: 0, md: 2 }} 
-                        sx={{ backgroundColor: "#c0c0c0" }}
-                        overflow="hidden"
+
+    const context = useContext(UserContext);
+
+    if (!context) {
+        throw new Error('UserProfile must be used within AppProvider');
+    }
+
+    const { logout } = context;
+
+    return (
+        <>
+            <Box sx={{ height: "100vh" }}>
+                <Grid container sx={{ height: "100%" }}>
+                    <Grid
+                        sx={{
+                            backgroundColor: "#c0c0c0",
+                            minWidth: "260px",
+                            height: "100%",
+                            '@media (max-width:980px)': {
+                                display: "none",
+                            },
+                            overflow: "hidden",
+                        }}
                     >
-						<Menu />
-					</Grid>
-					<Grid 
-                        size={{ xs: 12, md: 10 }} 
-                        sx={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#d3d3d3" }}
+                        <Menu logout={logout} />
+                    </Grid>
+                    <Grid
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            flexGrow: 1,
+                            height: "100%",
+                            overflowY: "auto",
+                        }}
                     >
-						<Outlet />
-					</Grid>
-				</Grid>
-			</Box>
-		</>
-	)
+                        <Outlet />
+                    </Grid>
+                </Grid>
+            </Box>
+        </>
+    )
 }

@@ -3,44 +3,46 @@ import { TextField, Button, IconButton, Box, Typography, FormControl, InputLabel
 import { Delete } from '@mui/icons-material';
 import { SxProps, Theme } from "@mui/material";
 
-export interface City {
-    x: string;
-    y: string;
+export interface Item {
+    weight: number | null;
+    value: number | null;
 }
 
-interface CityCoordinatesProps {
-    solve: (cities: City[], populationSize: number, generations: number) => void
+interface ThingsWeightsProps {
+    solve: (weights: Item[], populationSize: number, generations: number, maxWeight: number) => void
+    getData: (weights: Item[], populationSize: number, generations: number, maxWeight: number) => void 
     sx?: SxProps<Theme>;
 }
 
-function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
-    const [cities, setCities] = useState<City[]>([{ x: '', y: '' }]);
-    const [populationSize, setPopulationSize] = useState<number>(10); 
+function ThingsWeights({ solve, getData, sx }: ThingsWeightsProps) {
+    const [items, setItems] = useState<Item[]>([{ weight: null, value: null }]);
+    const [populationSize, setPopulationSize] = useState<number>(10);
     const [generations, setGenerations] = useState(10)
+    const [maxWeight, setMaxWeight] = useState(10)
 
     const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        const updatedCities = [...cities];
-        updatedCities[index][name as keyof City] = value;
-        setCities(updatedCities);
+        const updateditems = [...items];
+        updateditems[index][name as keyof Item] = +value;
+        setItems(updateditems);
     };
 
-    const addCity = () => {
-        setCities([...cities, { x: '', y: '' }]);
+    const addItem = () => {
+        setItems([...items, { weight: null, value: null }]);
     };
 
-    const removeCity = (index: number) => {
-        const updatedCities = cities.filter((_, i) => i !== index);
-        setCities(updatedCities);
+    const removeItem = (index: number) => {
+        const updateditems = items.filter((_, i) => i !== index);
+        setItems(updateditems);
     };
 
     return (
         <Box sx={{ ...sx }}>
-            <Typography variant='h5'>Введите координаты городов:</Typography>
-            <Button variant="contained" sx={{ backgroundColor: "#4b866e", my: 2 }} onClick={addCity}>
-                Добавить город
+            <Typography variant='h5'>Введите веса и ценности предметов:</Typography>
+            <Button variant="contained" sx={{ backgroundColor: "#4b866e", my: 2 }} onClick={addItem}>
+                Добавить предмет
             </Button>
-            {cities.map((city, index) => (
+            {items.map((item, index) => (
                 <Box
                     key={index}
                     sx={{
@@ -51,24 +53,24 @@ function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
                     }}
                 >
                     <TextField
-                        label="X координата"
+                        label="Вес предмета"
                         type="number"
                         size="small"
-                        name="x"
+                        name="weight"
                         variant="outlined"
-                        value={city.x}
+                        value={item.weight}
                         onChange={(e) => handleInputChange(index, e)}
                     />
                     <TextField
-                        label="Y координата"
+                        label="Ценность"
                         type="number"
                         size="small"
-                        name="y"
+                        name="value"
                         variant="outlined"
-                        value={city.y}
+                        value={item.value}
                         onChange={(e) => handleInputChange(index, e)}
                     />
-                    <IconButton color="error" onClick={() => removeCity(index)}>
+                    <IconButton color="error" onClick={() => removeItem(index)}>
                         <Delete />
                     </IconButton>
                 </Box>
@@ -81,6 +83,14 @@ function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
                 size="small"
                 value={generations}
                 onChange={(e) => setGenerations(+e.target.value)}
+            />
+            <TextField
+                label="Максимальная грузоподъемность"
+                type="number"
+                size="small"
+                variant="outlined"
+                value={maxWeight}
+                onChange={(e) => setMaxWeight(+e.target.value)}
             />
             <FormControl variant="outlined">
                 <InputLabel>Размер популяции</InputLabel>
@@ -97,9 +107,9 @@ function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
                     ))}
                 </Select>
             </FormControl>
-            <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => solve(cities, populationSize, generations)} variant="contained">Решить задачу</Button>
+            <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => { solve(items, populationSize, generations, maxWeight); getData(items, populationSize, generations, maxWeight)}} variant="contained">Решить задачу</Button>
         </Box>
     );
 }
 
-export default CityCoordinates;
+export default ThingsWeights;
