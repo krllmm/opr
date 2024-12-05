@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import { ChangeEvent, useState } from "react";
 import CityCoordinates, { City } from "./CityCoordinates";
 import Canvas from "./Canvas";
 
@@ -47,10 +47,19 @@ export default function Tsp() {
 			});
 	}
 
+	function handleLabelChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+		console.log(e)
+		throw new Error("Function not implemented.");
+	}
+
+	function handleClickSave(): void {
+		throw new Error("Function not implemented.");
+	}
+
 	return (
 		<>
 			<Typography variant="h3" sx={{ alignSelf: "center", my: 4 }}>Задача коммивояжера</Typography>
-			<Box 
+			<Box
 				sx={{
 					minWidth: "70%",
 					marginInline: "auto",
@@ -62,31 +71,64 @@ export default function Tsp() {
 				}}
 			>
 
-				<CityCoordinates 
-					solve={handleSolve} 
-					sx={{ 
-						opacity: loading ? "0.25" : "1", 
-						pointerEvents: loading ? "none" : "auto" 
-						}} 
+				<CityCoordinates
+					solve={handleSolve}
+					sx={{
+						opacity: loading ? "0.25" : "1",
+						pointerEvents: loading ? "none" : "auto"
+					}}
 				/>
 
-				{
-					bestLenght !== 0 && (
-						<Typography variant="h6" sx={{ marginTop: 2 }}>
-							Длина маршрута: {bestLenght.toFixed(2)}
-						</Typography>
-					)
-				}
+				<Box
+					sx={{
+						marginInline: "auto",
+						paddingInline: 1,
+						'@media (max-width:550px)': {
+							width: "350px"
+						},
+						width: "500px"
+					}}
+				>
+					{
+						bestLenght !== 0 && (<>
+							<Divider textAlign="left" sx={{ mt: 2 }}>Результат</Divider>
+							<Typography variant="h6" sx={{ backgroundColor: "lightgray", borderRadius: "6px", paddingLeft: "6px", marginBlock: "6px" }}>
+								Длина маршрута: {bestLenght.toFixed(2)}
+							</Typography>
+							<Typography variant="h6" sx={{ backgroundColor: "lightgray", borderRadius: "6px", paddingLeft: "6px", marginBlock: "6px" }}>
+								Оптимальный маршрут: {bestRoute.join("->")}
+							</Typography>
+						</>
+						)
+					}
 
-				{
-					bestRoute.length !== 0 && (
-						<Canvas
-							coordinates={matrix}
-							order={bestRoute}
-						/>
-					)
-				}
-
+					{
+						bestRoute.length !== 0 && (
+							<Canvas
+								coordinates={matrix}
+								order={bestRoute}
+							/>
+						)
+					}
+					{
+						bestRoute.length !== 0 && (
+							<>
+								<Divider textAlign="left" sx={{ my: 2 }}>Сохраните свой результат</Divider>
+								<Box sx={{ display: "flex", flexDirection: "column", gap: 1, marginTop: "6px" }}>
+									<TextField
+										label="Название"
+										type="text"
+										size="small"
+										variant="outlined"
+										value="Название"
+										onChange={(e) => handleLabelChange(e)}
+									/>
+									<Button variant="contained" onClick={handleClickSave}>Сохранить</Button>
+								</Box>
+							</>
+						)
+					}
+				</Box>
 			</Box>
 		</>
 	)

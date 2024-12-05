@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, Container, Snackbar, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ interface LoginProps {
 
 export default function Login({ setUser }: LoginProps) {
     const navigate = useNavigate();
-
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [, setMessage] = useState<string>("");
@@ -115,6 +114,20 @@ export default function Login({ setUser }: LoginProps) {
                     </Button>
                 </Typography>
             </Box>
+            <Snackbar
+                open={true}
+                autoHideDuration={2000}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+            >
+                <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    <AlertTitle>Ошибка</AlertTitle>
+                    Возникла ошибка авторизации.
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };

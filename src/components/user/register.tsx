@@ -1,5 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -52,6 +52,12 @@ export default function Register({ setUser }: RegisterProps) {
 
         console.log(username, password);
     }
+
+    useEffect(() => {
+        const id = localStorage.getItem("user");
+        if(id) navigate("../home")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Container

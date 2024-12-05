@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { TextField, Button, IconButton, Box, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, IconButton, Box, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { SxProps, Theme } from "@mui/material";
 
@@ -15,7 +15,7 @@ interface CityCoordinatesProps {
 
 function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
     const [cities, setCities] = useState<City[]>([{ x: '', y: '' }]);
-    const [populationSize, setPopulationSize] = useState<number>(10); 
+    const [populationSize, setPopulationSize] = useState<number>(10);
     const [generations, setGenerations] = useState(10)
 
     const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,9 +35,9 @@ function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
     };
 
     return (
-        <Box sx={{ ...sx }}>
-            <Typography variant='h5'>Введите координаты городов:</Typography>
-            <Button variant="contained" sx={{ backgroundColor: "#4b866e", my: 2 }} onClick={addCity}>
+        <Box sx={{ ...sx, marginInline: "auto", paddingInline: 1 }}>
+            <Divider textAlign="left" sx={{ mb: 1.4 }}>Настройки входных данных</Divider>
+            <Button variant="contained" sx={{ width: "100%", backgroundColor: "#4b866e", my: 2 }} onClick={addCity}>
                 Добавить город
             </Button>
             {cities.map((city, index) => (
@@ -73,31 +73,34 @@ function CityCoordinates({ solve, sx }: CityCoordinatesProps) {
                     </IconButton>
                 </Box>
             ))}
-            <TextField
-                label="Количество поколений"
-                type="number"
-                name="numericValue"
-                variant="outlined"
-                size="small"
-                value={generations}
-                onChange={(e) => setGenerations(+e.target.value)}
-            />
-            <FormControl variant="outlined">
-                <InputLabel>Размер популяции</InputLabel>
-                <Select
-                    label="Размер популяции"
+            <Divider textAlign="left" sx={{ mb: 1.4 }}>Настройки алгоритма</Divider>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <TextField
+                    label="Количество поколений"
+                    type="number"
+                    name="numericValue"
+                    variant="outlined"
                     size="small"
-                    value={populationSize}
-                    onChange={(e) => setPopulationSize(+e.target.value)}
-                >
-                    {[10, 20, 30, 40, 50].map((option) => (
-                        <MenuItem key={option} value={option.toString()}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => solve(cities, populationSize, generations)} variant="contained">Решить задачу</Button>
+                    value={generations}
+                    onChange={(e) => setGenerations(+e.target.value)}
+                />
+                <FormControl variant="outlined">
+                    <InputLabel>Размер популяции</InputLabel>
+                    <Select
+                        label="Размер популяции"
+                        size="small"
+                        value={populationSize}
+                        onChange={(e) => setPopulationSize(+e.target.value)}
+                    >
+                        {[10, 20, 30, 40, 50].map((option) => (
+                            <MenuItem key={option} value={option.toString()}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => solve(cities, populationSize, generations)} variant="contained">Решить задачу</Button>
+            </Box>
         </Box>
     );
 }

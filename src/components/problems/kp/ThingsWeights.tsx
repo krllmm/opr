@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { TextField, Button, IconButton, Box, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, IconButton, Box, FormControl, InputLabel, Select, MenuItem, Divider } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { SxProps, Theme } from "@mui/material";
 
@@ -10,7 +10,7 @@ export interface Item {
 
 interface ThingsWeightsProps {
     solve: (weights: Item[], populationSize: number, generations: number, maxWeight: number) => void
-    getData: (weights: Item[], populationSize: number, generations: number, maxWeight: number) => void 
+    getData: (weights: Item[], populationSize: number, generations: number, maxWeight: number) => void
     sx?: SxProps<Theme>;
 }
 
@@ -37,9 +37,9 @@ function ThingsWeights({ solve, getData, sx }: ThingsWeightsProps) {
     };
 
     return (
-        <Box sx={{ ...sx }}>
-            <Typography variant='h5'>Введите веса и ценности предметов:</Typography>
-            <Button variant="contained" sx={{ backgroundColor: "#4b866e", my: 2 }} onClick={addItem}>
+        <Box sx={{ ...sx, marginInline: "auto", paddingInline: 1 }}>
+            <Divider textAlign="left" sx={{ mb: 1.4 }}>Настройки входных данных</Divider>
+            <Button variant="contained" sx={{ width: "100%", backgroundColor: "#4b866e", mb: 2.2 }} onClick={addItem}>
                 Добавить предмет
             </Button>
             {items.map((item, index) => (
@@ -75,39 +75,42 @@ function ThingsWeights({ solve, getData, sx }: ThingsWeightsProps) {
                     </IconButton>
                 </Box>
             ))}
-            <TextField
-                label="Количество поколений"
-                type="number"
-                name="numericValue"
-                variant="outlined"
-                size="small"
-                value={generations}
-                onChange={(e) => setGenerations(+e.target.value)}
-            />
-            <TextField
-                label="Максимальная грузоподъемность"
-                type="number"
-                size="small"
-                variant="outlined"
-                value={maxWeight}
-                onChange={(e) => setMaxWeight(+e.target.value)}
-            />
-            <FormControl variant="outlined">
-                <InputLabel>Размер популяции</InputLabel>
-                <Select
-                    label="Размер популяции"
+            <Divider textAlign="left" sx={{ mb: 1.4 }}>Настройки алгоритма</Divider>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <TextField
+                    label="Количество поколений"
+                    type="number"
+                    name="numericValue"
+                    variant="outlined"
                     size="small"
-                    value={populationSize}
-                    onChange={(e) => setPopulationSize(+e.target.value)}
-                >
-                    {[10, 20, 30, 40, 50].map((option) => (
-                        <MenuItem key={option} value={option.toString()}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => { solve(items, populationSize, generations, maxWeight); getData(items, populationSize, generations, maxWeight)}} variant="contained">Решить задачу</Button>
+                    value={generations}
+                    onChange={(e) => setGenerations(+e.target.value)}
+                />
+                <TextField
+                    label="Максимальная грузоподъемность"
+                    type="number"
+                    size="small"
+                    variant="outlined"
+                    value={maxWeight}
+                    onChange={(e) => setMaxWeight(+e.target.value)}
+                />
+                <FormControl variant="outlined">
+                    <InputLabel>Размер популяции</InputLabel>
+                    <Select
+                        label="Размер популяции"
+                        size="small"
+                        value={populationSize}
+                        onChange={(e) => setPopulationSize(+e.target.value)}
+                    >
+                        {[10, 20, 30, 40, 50].map((option) => (
+                            <MenuItem key={option} value={option.toString()}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <Button sx={{ backgroundColor: "#4b866e" }} onClick={() => { solve(items, populationSize, generations, maxWeight); getData(items, populationSize, generations, maxWeight) }} variant="contained">Решить задачу</Button>
+            </Box>
         </Box>
     );
 }

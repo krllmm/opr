@@ -100,8 +100,8 @@ const PathCanvas = ({ coordinates, order }: Props) => {
         <Box sx={{ position: 'relative', display: 'inline-flex', width: "100%" }}>
             <canvas
                 ref={canvasRef}
-                width={350}
-                height={300}
+                width={500}
+                height={500}
                 style={{ border: '1px solid #000', marginInline: "auto" }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={() => setHoveredCity(null)}
