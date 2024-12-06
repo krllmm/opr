@@ -33,10 +33,10 @@ export default function Kp() {
 		// console.log("items: ", items)
 		setLoading(true)
 
-		fetch('https://python-patient-solely.ngrok-free.app/solve_kp', {
+		fetch('https://flaskoprserver-production.up.railway.app/solve_kp', {
 			method: "POST",
 			headers: {
-				'ngrok-skip-browser-warning': "yes",
+				// 'ngrok-skip-browser-warning': "yes",
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
@@ -88,10 +88,10 @@ export default function Kp() {
 		console.log("history: ", history)
 		setLoading(true)
 
-		fetch('https://python-patient-solely.ngrok-free.app/save_record', {
+		fetch('https://flaskoprserver-production.up.railway.app/save_record', {
 			method: "POST",
 			headers: {
-				'ngrok-skip-browser-warning': "yes",
+				// 'ngrok-skip-browser-warning': "yes",
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({

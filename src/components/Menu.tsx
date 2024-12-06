@@ -34,10 +34,10 @@ export const Menu = ({ logout }: MenuProps) => {
 	const [username, setUsername] = useState<string | null>(null);
 
 	const getUsername = async (userId: string) => {
-		const response = await fetch('https://python-patient-solely.ngrok-free.app/get_user', {
+		const response = await fetch('https://flaskoprserver-production.up.railway.app/get_user', {
 			method: 'POST',
 			headers: {
-				'ngrok-skip-browser-warning': "yes",
+				// 'ngrok-skip-browser-warning': "yes",
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({

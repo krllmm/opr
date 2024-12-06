@@ -14,10 +14,10 @@ export default function Login({ setUser }: LoginProps) {
     const [, setMessage] = useState<string>("");
 
     const login = () => {
-        fetch('https://python-patient-solely.ngrok-free.app/login', {
+        fetch('https://flaskoprserver-production.up.railway.app/login', {
             method: 'POST',
             headers: {
-                'ngrok-skip-browser-warning': "yes",
+                // 'ngrok-skip-browser-warning': "yes",
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

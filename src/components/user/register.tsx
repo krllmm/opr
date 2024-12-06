@@ -22,10 +22,10 @@ export default function Register({ setUser }: RegisterProps) {
             return;
         }
 
-        fetch('https://python-patient-solely.ngrok-free.app/create_user', {
+        fetch('https://flaskoprserver-production.up.railway.app/create_user', {
             method: 'POST',
             headers: {
-                'ngrok-skip-browser-warning': "yes",
+                // 'ngrok-skip-browser-warning': "yes",
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

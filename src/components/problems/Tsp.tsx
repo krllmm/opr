@@ -19,10 +19,10 @@ export default function Tsp() {
 		setMatrix(matrix)
 		setLoading(true)
 
-		fetch('https://python-patient-solely.ngrok-free.app/solve_tsp', {
+		fetch('https://flaskoprserver-production.up.railway.app/solve_tsp', {
 			method: "POST",
 			headers: {
-				'ngrok-skip-browser-warning': "yes",
+				// 'ngrok-skip-browser-warning': "yes",
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
