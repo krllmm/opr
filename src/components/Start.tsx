@@ -3,11 +3,12 @@ import { styled } from '@mui/system';
 import { NavLink } from "react-router-dom";
 
 const StyledButton = styled(NavLink)({
-	color: "#272727",
+	color: "white",
 	textDecoration: "none",
 	backgroundColor: "#4b866e",
 	padding: 10,
 	borderRadius: 6,
+    marginLeft: "auto",
 
 	":hover": {
 		color: "#000",
@@ -33,6 +34,8 @@ export const Start = () => {
 						backgroundColor: "lightgrey",
 						borderRadius: 2,
 						boxShadow: 2,
+                        display: "flex",
+                        flexDirection: "column",
 					}}
 				>
 					<Typography variant="h4" sx={{ color: "#4b866e" }} >
@@ -65,6 +68,8 @@ export const Start = () => {
 						backgroundColor: "lightgrey",
 						borderRadius: 2,
 						boxShadow: 2,
+                        display: "flex",
+                        flexDirection: "column",
 					}}
 				>
 					<Typography variant="h4" gutterBottom sx={{ color: "#4b866e" }}>

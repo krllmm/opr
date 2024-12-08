@@ -1,24 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Accordion, AccordionDetails, AccordionSummary, Backdrop, Box, CircularProgress, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface HistoryItem {
+	items: any;
 	label: string;
-	bestCombination: string;
+	bestCombination?: string;
 	populationSize: number;
 	generations: number;
-	maxWeight: number;
+	maxWeight?: number;
 	type: string;
-	reminingSpace: number;
-	value: number;
+	reminingSpace?: number;
+	value?: number;
 	timestamp: string;
+	bestLenght?: number;
+	bestRoute?: string;
 }
 
 export default function History() {
 	const [history, setHistory] = useState<HistoryItem[]>([])
 	const [loading, setLoading] = useState<boolean>(false)
+	const [message, setMessage] = useState<string>("")
 
 	const getHistory = async () => {
+		setMessage("")
 		setLoading(true)
 		fetch('https://flaskoprserver-production.up.railway.app/get_history', {
 			method: "POST",
@@ -37,14 +43,25 @@ export default function History() {
 				return response.json();
 			})
 			.then(data => {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				data["history"].map((item: any) => {
-					item.bestCombination = item.bestCombination.join(", ")
-				})
-				setHistory(data["history"])
-				setTimeout(() =>
-					setLoading(false), 500
-				)
+				console.log(data["history"])
+				if (data["history"] === "Пустая история") {
+					setMessage("Вы еще не сохранили ни одного расчета")
+					setLoading(false)
+					// return;
+				} else {
+					data["history"].map((item: any) => {
+						if(item.bestCombination){
+							item.bestCombination = item.bestCombination.join(", ")
+						}
+						if(item.bestRoute){
+							// item.bestRoute = item.bestRoute.map((i: number) => { return i+1 })
+							item.bestRoute = item.bestRoute.join("->")
+						}
+					})
+
+					setHistory(data["history"])
+					setLoading(false)
+				}
 			})
 			.catch(error => {
 				console.error('Ошибка при загрузке данных:', error);
@@ -89,10 +106,20 @@ export default function History() {
                     ${new Date(item.timestamp).getHours()}:${new Date(item.timestamp).getMinutes()}`}
 										</Typography>
 
-										<Typography>Максимальная грузоподъемность: {item.maxWeight}</Typography>
-										<Typography>Оптимальная загрузка: {item.bestCombination}</Typography>
-										<Typography>Итоговая ценность: {item.value}</Typography>
-										<Typography>Оставшееся свободное место: {item.reminingSpace}</Typography>
+										{/* <Typography>Исходные данные: {item.items}</Typography> */}
+										{
+											item.type === "Задача коммивояжера" ?
+												<>
+													<Typography>Длина маршрута: {item.bestLenght}</Typography>
+													<Typography>Оптимальный маршрут: {item.bestRoute}</Typography>
+												</>
+												: <>
+													<Typography>Максимальная грузоподъемность: {item.maxWeight}</Typography>
+													<Typography>Оптимальная загрузка: {item.bestCombination}</Typography>
+													<Typography>Итоговая ценность: {item.value}</Typography>
+													<Typography>Оставшееся свободное место: {item.reminingSpace}</Typography>
+												</>
+										}
 										<Divider sx={{ my: 1 }} />
 										<Typography variant="h5">Параметры решения</Typography>
 										<Typography>Размер популяции: {item.populationSize}</Typography>
@@ -101,7 +128,7 @@ export default function History() {
 									</AccordionDetails>
 								</Accordion>
 							))
-							: ""
+							: <Typography variant="h5" sx={{ alignSelf: "center" }}>{message}</Typography>
 				}
 			</Box>
 		</>

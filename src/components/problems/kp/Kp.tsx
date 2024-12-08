@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alert, Box, Button, Divider, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Divider, Snackbar, TextField, Typography } from "@mui/material";
 import ThingsWeights, { Item } from "./ThingsWeights";
 import { ChangeEvent, useState } from "react";
 import { LineChart } from '@mui/x-charts/LineChart';
@@ -14,6 +14,8 @@ export default function Kp() {
 	const [open, setOpen] = useState(false);
 	const [history, setHistory] = useState<any>();
 	const [graphData, setGraphData] = useState<any | null>();
+    const [paramsErrorMessage, setParamsErrorMessage] = useState<string>("")
+    const [showParamsError, setShowParamsError] = useState<boolean>(false)
 
 	const getHistory = (items: Item[], populationSize: number, generations: number, maxWeight: number) => {
 		setHistory({
@@ -25,12 +27,29 @@ export default function Kp() {
 	}
 
 	const handleSolve = (items: Item[], populationSize: number, generations: number, max_weight: number) => {
+        let notSuitable: boolean = false
+        items.map(i => {
+            if(i.weight == null || i.value == null || i.weight <= 0 || i.value <= 0){
+                console.log("null found")
+                setParamsErrorMessage("Значения весов и ценности предметов не могут быть отрицательными или пустыми")
+                setShowParamsError(true)
+                notSuitable = true
+                return
+            }
+        })
+
+        if(notSuitable) return
+        
+        if(generations <= 0 || max_weight <= 0){
+            setParamsErrorMessage("Значения параметров алгоритма не могут быть отрицательными или пустыми")
+            setShowParamsError(true)
+            return
+        }
+
 		setValue(null)
 		setGraphData(null)
 		setRemainingSpace(null)
 		setBestCombination([])
-
-		// console.log("items: ", items)
 		setLoading(true)
 
 		fetch('https://flaskoprserver-production.up.railway.app/solve_kp', {
@@ -134,6 +153,7 @@ export default function Kp() {
 	const handleClose = () => {
 		setOpen(false)
 		setSaveErrorMessage(false)
+        setShowParamsError(false)
 	};
 
 	return (
@@ -156,7 +176,6 @@ export default function Kp() {
 					sx={{
 						opacity: loading ? "0.25" : "1",
 						pointerEvents: loading ? "none" : "auto",
-						// marginInline: 1,
 					}}
 				/>
 				<Box
@@ -222,7 +241,7 @@ export default function Kp() {
 
 			<Snackbar
 				open={saveErrorMessage}
-				autoHideDuration={2000}
+				autoHideDuration={1500}
 				onClose={handleClose}
 			>
 				<Alert
@@ -236,7 +255,7 @@ export default function Kp() {
 
 			<Snackbar
 				open={open}
-				autoHideDuration={2000}
+				autoHideDuration={1500}
 				onClose={handleClose}
 			>
 				<Alert
@@ -245,6 +264,21 @@ export default function Kp() {
 					sx={{ width: '100%' }}
 				>
 					Запись сохранена в историю
+				</Alert>
+			</Snackbar>
+
+            <Snackbar
+				open={showParamsError}
+				autoHideDuration={2500}
+				onClose={handleClose}
+			>
+				<Alert
+					severity="error"
+					variant="filled"
+					sx={{ width: '100%' }}
+				>
+					<AlertTitle>Ошибка данных</AlertTitle>
+					{paramsErrorMessage}
 				</Alert>
 			</Snackbar>
 		</>

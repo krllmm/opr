@@ -8,12 +8,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const StyledLink = styled(NavLink)({
+export const StyledLink = styled(NavLink)({
 	color: "#272727",
 	textDecoration: "none",
 	paddingBlock: 10,
 	paddingInline: 20,
 	marginTop: 8,
+    marginInline: "8px",
 	display: "flex",
 	alignItems: 'center',
 	transition: 'background-color 0.3s, color 0.3s',
@@ -59,7 +60,7 @@ export const Menu = ({ logout }: MenuProps) => {
 
 	return (
 		<>
-			<Box sx={{ minWidth: "260px", display: "flex", flexDirection: "column", height: "100vh", paddingInline: "8px", position: "sticky" }}>
+			<Box sx={{ minWidth: "260px", display: "flex", flexDirection: "column", height: "100vh", position: "sticky" }}>
 				<StyledLink
 					to="/"
 					end
@@ -96,7 +97,10 @@ export const Menu = ({ logout }: MenuProps) => {
 							</StyledLink>
 							<LogoutIcon sx={{ mr: 2, ml: "auto", cursor: "pointer" }} onClick={logout} />
 						</Box>
-						: ""
+						: 
+                        <Box sx={{ display: "flex", alignItems: "center", marginTop: "auto", marginBottom: "8px" }}>
+                            <LogoutIcon sx={{ mr: 2, ml: "auto", cursor: "pointer" }} onClick={logout} />
+                        </Box>
 				}
 			</Box>
 		</>
